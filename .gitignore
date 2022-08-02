@@ -1,5 +1,6 @@
 .vscode
 received
+apikey.txt
 *.jpg
 *.jpeg
 *.gif

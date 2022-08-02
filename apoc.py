@@ -7,8 +7,17 @@ import sys, os
 from datetime import date
 from mimetypes import guess_extension
 
+# Get API key from apikey file in script path
+# (See apikey.example)
+try:
+    with open(f'{sys.path[0]}{os.sep}apikey', 'r') as apikey_file:
+        api_key=apikey_file.read().strip()
+except:
+    print("No apikey file found.")
+    quit()
+
 api_parms = {
-    'api_key':      'DnzonVU2M9lpmEmjUjCCMfXPezmqI8lSALKuFyaY',
+    'api_key':      api_key,
     'date':         date.today().strftime("%Y-%m-%d")
 }
 api_url = f'https://api.nasa.gov/planetary/apod'
