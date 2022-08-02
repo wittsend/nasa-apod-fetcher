@@ -10,10 +10,12 @@ from mimetypes import guess_extension
 # Get API key from apikey file in script path
 # (See apikey.example)
 try:
-    with open(f'{sys.path[0]}{os.sep}apikey', 'r') as apikey_file:
+    print(f'Fetching API key from "{sys.path[0]}{os.sep}apikey.txt"')
+    with open(f'{sys.path[0]}{os.sep}apikey.txt', 'r') as apikey_file:
         api_key=apikey_file.read().strip()
+    print(f'API key is "{api_key}"')
 except:
-    print("No apikey file found.")
+    print("No apikey.txt file found.")
     quit()
 
 api_parms = {
@@ -25,6 +27,7 @@ api_url = f'https://api.nasa.gov/planetary/apod'
 save_path = f'{sys.path[0]}{os.sep}received{os.sep}' 
 save_file = f'{save_path}apod-{api_parms["date"]}'
 
+print(f'Requesting data from {api_url}...')
 # Do get request on URL
 resp = requests.api.get(url=api_url, params=api_parms)
 
@@ -48,6 +51,7 @@ f_ext = guess_extension(im.headers["content-type"])
 if not os.path.exists(save_path):
     os.mkdir(save_path)
 
+print(f'Saving image to "{save_file}{f_ext}...\n"')
 with open(rf'{save_file}{f_ext}', 'wb') as f:
     f.write(im.content)
 
@@ -55,8 +59,7 @@ output_str = \
 f'{data["title"]} - {data["date"]}\n\n\
 {data["explanation"]}\n\n\
 (c) {data["copyright"]}'
-
 print(output_str)
-
+print(f'\nSaving description to "{save_file}.txt..."')
 with open(rf'{save_file}.txt', 'w') as f:
     f.write(output_str)

@@ -5,3 +5,8 @@ apikey.txt
 *.jpeg
 *.gif
 *.txt
+
+# pyinstaller files
+*.spec
+build
+dist
